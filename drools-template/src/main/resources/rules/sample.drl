@@ -1,0 +1,36 @@
+package rules;
+
+import com.example.droolstemplate.models.SampleRequest;
+import com.example.droolstemplate.models.SampleResponse;
+
+dialect "mvel"
+
+rule "sample 1"
+    when
+        SampleRequest(data == "sample")
+        $response: SampleResponse()
+    then
+        $response.setOutput("sample 1");
+        retract($response);
+end
+
+rule "sample 2"
+    when
+        SampleRequest(data == "another")
+        $response: SampleResponse()
+    then
+        $response.setOutput("sample 2");
+        retract($response);
+end
+
+rule "sample 3"
+    when
+        SampleRequest(
+            data != "sample",
+            data != "another"
+        )
+        $response: SampleResponse()
+    then
+        $response.setOutput("sample 3");
+        retract($response);
+end
